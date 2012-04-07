@@ -3,6 +3,7 @@
 #
 # ============================================================================
 # Copyright René Mayrhofer, 2010-2011
+# Modified for India Force Linux by Harshad Joshi <firewalrus@gmail.com>,April 2012
 #
 # Contributors:
 # * Dieter Plaetinck: documentation and bug fixes, launcher script, config
@@ -788,6 +789,13 @@ if __name__ == '__main__':
     read_configfiles = config.read(config_locations)
     if len(read_configfiles) == 0:
 	logging.error('No config file specified or config file(s) %s could not be opened' % config_locations)
+	logging.error('I will try fetching config file (.autosync-example) from repository and store it in current directory. Please modify it, copy to your home folder and run program once again')
+	url='https://raw.github.com/hj91/dvcs-autosync/master/.autosync-example'
+	webFile = urllib.urlopen(url)
+	localFile = open(url.split('/')[-1], 'w')
+	localFile.write(webFile.read())
+	webFile.close()
+	localFile.close()
 	sys.exit(10)
 
     pathstr = config_get('autosync', 'path')
